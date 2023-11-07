@@ -5,4 +5,5 @@
 
 using namespace std;
 
+bool isBalanced(const string expression);
 string infixToPostfix(const string infix);

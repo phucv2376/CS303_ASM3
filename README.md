@@ -2,17 +2,23 @@
 
 ## Question 1 | Infix to Prefix Converter
 
-Upon running the program, user will be prompted to enter an infix expression.
+Subsequently after running the program, user will be prompted to enter an infix expression.
 
 After entering an infix, the program will check if the parentheses, brackets and curly brackets in the expression are balanced before converting the user-entered infix function into a postfix function.
 
 #### Screenshot of program output:
 
+Imbalanced expression
+
+![Alt text](screenshots/Imbalanced_expression.png)
+
+Valid expression
+
 ![Alt text](screenshots/Infix_to_Postfix_converter.png)
 
 ## Question 2 | Queue Implementation
 
-Upon running the program, the user will see outputs from a driver program to indicate that the queue is functioning.
+Subsequently after running the program, the user will see outputs from a driver program to indicate that the queue is functioning.
 
 ### The Queue implementation contains the following methods:
 

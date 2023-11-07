@@ -18,7 +18,10 @@ private:
 public:
     Queue() : front(nullptr), rear(nullptr), size(0) {}
 
-    // Inserts a new element at the rear of the queue.
+    /**
+     * Inserts a new element at the rear of the queue.
+     * @params {T} value - a value to add to queue
+     */
     void enqueue(const T &value)
     {
         Node *newNode = new Node(value);
@@ -34,7 +37,9 @@ public:
         size++;
     }
 
-    // Removes the front element of the queue and returns it.
+    /**
+     * Removes the front element of the queue and returns it.
+     */
     T dequeue()
     {
         if (!isEmpty())
@@ -51,7 +56,9 @@ public:
         return T(); // Return a default-constructed value for an error
     }
 
-    // Returns the front element present in the queue without removing it.
+    /**
+     * Returns the front element present in the queue without removing it.
+     */
     T getFront()
     {
         if (!isEmpty())
@@ -63,13 +70,19 @@ public:
         return T(); // Return a default-constructed value for an error
     }
 
-    // Checks if the queue is empty
+    /**
+     * Checks for an empty queue
+     * @returns boolean indicative of whether queue is empty
+     */
     bool isEmpty()
     {
         return size == 0;
     }
 
-    // Returns the total number of elements present in the queue.
+    /**
+     * Get size of queue
+     * @returns size of queue
+     */
     int getSize()
     {
         return size;

@@ -2,17 +2,15 @@
 
 using namespace std;
 
-const string OPEN = "([{";
-
-const string CLOSE = ")]}";
-
 bool isOpen(char c)
 {
+    const string OPEN = "([{";
     return OPEN.find(c) != string::npos;
 }
 
 bool isClose(char c)
 {
+    const string CLOSE = ")]}";
     return CLOSE.find(c) != string::npos;
 }
 
@@ -24,7 +22,7 @@ bool isOperator(char c)
 /**
  * Identify precendence of operator according to PEMDAS.
  * @params {char} op - operator from an expression.
- * @returns priority of operator (2 is higher than 1).
+ * @returns priority of operator (2 takes higher precedence than 1).
  */
 int precedence(char op)
 {

@@ -1,0 +1,137 @@
+#include "functions.h"
+
+using namespace std;
+/**
+ * Checks if char c is an operator.
+ * @params {char} c - a singlular character from an expression
+ * @returns  boolean indicative of if c is an operator
+ */
+
+const string OPEN = "([{";
+
+const string CLOSE = ")]}";
+
+bool is_open(char c)
+{
+    return OPEN.find(c) != string::npos;
+}
+
+bool is_close(char c)
+{
+    return CLOSE.find(c) != string::npos;
+}
+
+bool isalnumStr(string str)
+{
+    for (char c : str)
+    {
+        if (!isalnum(c))
+            return false;
+    }
+
+    return true;
+}
+
+bool isOperator(char c)
+{
+    return c == '+' || c == '-' || c == '*' || c == '/' || c == '%';
+}
+
+/**
+ * Identify precendence of operator according to PEMDAS.
+ * @params {char} op - operator from an expression.
+ * @returns priority of operator (2 is higher than 1).
+ */
+int precedence(char op)
+{
+    if (op == '+' || op == '-')
+        return 1;
+    if (op == '*' || op == '/' || op == '%')
+        return 2;
+    return 0;
+}
+
+/**
+ * Checks if expression is balanced
+ * @params {string} expression - given expression to check.
+ * @returns Whether the expression is balanced
+ */
+bool isBalanced(const string expression)
+{
+    stack<char> s; // Stack to keep track of {[( in an expression
+    for (char c : expression)
+    {
+        if (c == '(' || c == '{' || c == '[')
+        {
+            s.push(c);
+        }
+        else if (c == ')' || c == '}' || c == ']')
+        {
+            if (s.empty())
+                return false; // Unbalanced parentheses
+            char top = s.top();
+            if ((c == ')' && top == '(') || (c == '}' && top == '{') || (c == ']' && top == '['))
+                s.pop();
+            else
+                return false; // Mismatched parentheses
+        }
+    }
+    return s.empty();
+}
+
+/**
+ * Converts an infix expression into a postfix expression
+ * @params {string} infix - a given infix expression
+ * @returns postfix version of a given infix expression
+ */
+string infixToPostfix(const string infix)
+{
+    vector<char> postfix;
+    stack<char> operators;
+    if (!isBalanced(infix))
+        throw runtime_error("Invalid Expression. The parentheses in the inputted experession are not balanced");
+    for (char c : infix)
+    {
+        if (isalnum(c))
+        {
+            // operand = operand.append(s);
+            postfix.push_back(c);
+        }
+        else if (is_open(c))
+        {
+            operators.push(c);
+        }
+        else if (is_close(c))
+        {
+            while (!is_open(operators.top()))
+            {
+                postfix.push_back(operators.top());
+                operators.pop();
+            }
+        }
+        else
+        {
+            while (!operators.empty() && precedence(c) <= precedence(operators.top()))
+            {
+                postfix.push_back(operators.top());
+                operators.pop();
+            }
+            operators.push(c);
+        }
+    }
+
+    while (!operators.empty())
+    {
+        postfix.push_back(operators.top());
+        operators.pop();
+    }
+
+    string postfix_str = "";
+    for (char c : postfix)
+    {
+        string s(1, c);
+        postfix_str.append(s);
+        postfix_str.append(" ");
+    }
+    return postfix_str;
+}

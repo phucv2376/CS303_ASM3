@@ -1,22 +1,28 @@
 #include <iostream>
 
-template <typename T>
-class Queue
-{
-private:
-    struct Node
+using namespace std;
+
+template <typename T> struct Node
     {
         T data;
         Node *next;
         Node(const T &value) : data(value), next(nullptr) {}
     };
 
-    Node *front;
-    Node *rear;
+template <typename T>
+class Queue
+{
+private:
+    Node<T> *front;
+    Node<T> *rear;
     int size;
 
 public:
-    Queue() : front(nullptr), rear(nullptr), size(0) {}
+    Queue() {
+      front = nullptr;
+      rear = nullptr;
+      size = 0;
+    }
 
     /**
      * Inserts a new element at the rear of the queue.
@@ -24,7 +30,7 @@ public:
      */
     void enqueue(const T &value)
     {
-        Node *newNode = new Node(value);
+        Node<T>* newNode = new Node<T>(value);
         if (isEmpty())
         {
             front = rear = newNode;
@@ -39,12 +45,13 @@ public:
 
     /**
      * Removes the front element of the queue and returns it.
+     * @returns front element of queue.
      */
     T dequeue()
     {
         if (!isEmpty())
         {
-            Node *temp = front;
+            Node<T>* temp = front;
             T frontValue = front->data;
             front = front->next;
             delete temp;
@@ -52,12 +59,13 @@ public:
             return frontValue;
         }
         // Handle the case where the queue is empty
-        std::cerr << "Queue is empty. Cannot dequeue." << std::endl;
+        throw runtime_error("elements can not be dequeued from an empty queue");
         return T(); // Return a default-constructed value for an error
     }
 
     /**
      * Returns the front element present in the queue without removing it.
+     * @returns front element of queue.
      */
     T getFront()
     {
@@ -66,7 +74,7 @@ public:
             return front->data;
         }
         // Handle the case where the queue is empty
-        std::cerr << "Queue is empty. No front element to retrieve." << std::endl;
+        throw runtime_error("The queue is empty. No values to return");
         return T(); // Return a default-constructed value for an error
     }
 
